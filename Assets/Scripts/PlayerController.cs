@@ -19,11 +19,28 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        moving();
+        looking();
+        jumping();
+    }
+
+    void moving()
+    {
         float moveHorizontal = Input.GetAxis("Horizontal");
         Vector2 movement = new Vector2(moveHorizontal, 0);
-        sr.flipX = movement.x < 0;
         rb2d.AddForce(movement * speed);
+    }
 
+    void looking()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+            sr.flipX = true;
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+            sr.flipX = false;
+    }
+
+    void jumping()
+    {
         Vector2 jumpVec = new Vector2(0, 10);
         if (Input.GetKeyDown(KeyCode.Z))
             rb2d.AddForce(jumpVec * jumpHeight);
@@ -33,5 +50,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         
+
     }
 }
