@@ -10,7 +10,6 @@ public class PlayerMovementController : MonoBehaviour
     public float ClimbSpeed;
     public LayerMask ClimbObjects;
     private float _originalGravityScale;
-    private Vector2 _originalSize, _climbingSize;
     private Rigidbody2D _rb;
     private SpriteRenderer _sr;
     private bool _climbing;
@@ -22,12 +21,10 @@ public class PlayerMovementController : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _originalGravityScale = _rb.gravityScale;
-        _originalSize = new Vector2(0.1642804f, 0.1501374f);
-        _climbingSize = new Vector2(0.4508384f, 0.4916594f);
         _sr = GetComponent<SpriteRenderer>();
         _climbing = false;
         _cavemanSprite = Resources.Load<Sprite>("Caveman");
-        _climbingSprite = Resources.Load<Sprite>("Caveman Climbing");
+        _climbingSprite = Resources.Load<Sprite>("Caveman Climbing2");
     }
 
     // Update is called once per frame
@@ -67,7 +64,7 @@ public class PlayerMovementController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Z) && _rb.velocity.y == 0)
         {
             _climbing = false;
-            //SpriteChange(_cavemanSprite, _originalSize);
+            _sr.sprite = _cavemanSprite;
             _rb.AddForce(Vector2.up * JumpSpeed, ForceMode2D.Impulse);
         }
     }
@@ -82,7 +79,7 @@ public class PlayerMovementController : MonoBehaviour
             {
                 if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow))
                 {
-                    //SpriteChange(_climbingSprite, _climbingSize);
+                    _sr.sprite = _climbingSprite;
                     _climbing = true;
                     _rb.velocity = Vector2.zero;
                     _rb.gravityScale = 0;
@@ -96,11 +93,5 @@ public class PlayerMovementController : MonoBehaviour
             _climbing = false;
             _rb.gravityScale = _originalGravityScale;
         }
-    }
-
-    private void SpriteChange(Sprite newSprite, Vector2 newSize)
-    {
-        _sr.sprite = newSprite;
-       _sr.transform.localScale = new Vector2(newSize.x, newSize.y);
     }
 }
