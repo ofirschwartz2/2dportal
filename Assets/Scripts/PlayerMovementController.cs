@@ -9,11 +9,13 @@ public class PlayerMovementController : MonoBehaviour
     public float JumpSpeed;
     public float ClimbSpeed;
     public LayerMask ClimbObjects;
+    public DateTime PortalEnterTime;
     private float _originalGravityScale;
     private Rigidbody2D _rb;
     private SpriteRenderer _sr;
     private bool _climbing;
     private Sprite _cavemanSprite, _climbingSprite;
+    
 
 
     // Start is called before the first frame update
@@ -25,6 +27,7 @@ public class PlayerMovementController : MonoBehaviour
         _climbing = false;
         _cavemanSprite = Resources.Load<Sprite>("Caveman");
         _climbingSprite = Resources.Load<Sprite>("Caveman Climbing2");
+        PortalEnterTime = DateTime.MinValue;
     }
 
     // Update is called once per frame
