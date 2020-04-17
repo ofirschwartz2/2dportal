@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Rope
+  - Caveman
+  - Portal1
+  - Portal2
   - Spike
   - EndDoor
   layers:
