@@ -111,7 +111,7 @@ public class PlayerMovementController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Spike"))
+        if (other.gameObject.CompareTag("Spike") &&  (_rb.velocity.y < 0) )
         {
             _alive = false;
             _sr.sprite = _deadSprite;
