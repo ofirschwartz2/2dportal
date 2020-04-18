@@ -12,6 +12,8 @@ TagManager:
   - EndDoor
   - Ground
   - portalShot
+  - CavemanPortalGun
+  - PortalGun
   layers:
   - Default
   - TransparentFX

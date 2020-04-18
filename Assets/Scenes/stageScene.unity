@@ -1870,6 +1870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00a9d57ec53e5cf4598e04080781bfc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cavemanPortalGun: {fileID: 1141902539}
   portalShoot: {fileID: 1651658819}
   shotSpeed: 13
   armed: 0
@@ -2539,7 +2540,7 @@ GameObject:
   - component: {fileID: 951767584}
   m_Layer: 0
   m_Name: Portal gun
-  m_TagString: Untagged
+  m_TagString: PortalGun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2600,7 +2601,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 951767580}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.631, y: -0.645, z: 0}
+  m_LocalPosition: {x: 3.55, y: -3.14, z: 0}
   m_LocalScale: {x: 0.095668465, y: 0.095668465, z: 0.095668465}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3732,7 +3733,7 @@ GameObject:
   - component: {fileID: 1651658822}
   m_Layer: 0
   m_Name: Portal shot
-  m_TagString: portalShot
+  m_TagString: PortalGun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3848,6 +3849,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93814645c6e7fe046a7a3e8d24a2feaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  portalCount: 0
 --- !u!1 &1670512543
 GameObject:
   m_ObjectHideFlags: 0

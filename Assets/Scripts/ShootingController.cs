@@ -28,12 +28,19 @@ public class ShootingController : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
         {
             portalgunsr.flipX = true;
-            // Vector3 pos = portalguntransform.position;////////////
-            // pos.x = pos.x - 1 ;//////////////////////////
-            // portalguntransform.position = pos;//////////////
+            Vector3 pos = transform.position;
+            pos.x = pos.x - 0.18f;
+            pos.y = pos.y - 0.1f;
+            portalguntransform.position = pos;
         }
         if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
+        {
             portalgunsr.flipX = false;
+            Vector3 pos = transform.position;
+            pos.x = pos.x + 0.18f;
+            pos.y = pos.y - 0.1f;
+            portalguntransform.position = pos;
+        }
         if (armed)
         {
             cavemanPortalGun.SetActive(true);
