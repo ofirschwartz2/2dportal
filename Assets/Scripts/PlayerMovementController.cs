@@ -19,6 +19,8 @@ public class PlayerMovementController : MonoBehaviour
     private bool _alive, _won, _climbing;
     private Sprite _cavemanSprite, _climbingSprite, _deadSprite;
 
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -111,17 +113,35 @@ public class PlayerMovementController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Spike") &&  (_rb.velocity.y < 0) )
+        if (other.gameObject.CompareTag("Spike") && (_rb.velocity.y < 0))
         {
-            _alive = false;
-            _sr.sprite = _deadSprite;
-            _deadText.text = "DEAD";
+            die();
         }
         if (other.gameObject.CompareTag("EndDoor"))
         {
-            _won = true;
-            _winText.text = "WIN";
+            win();
+        }
+        if (other.gameObject.CompareTag("PortalGun"))
+        {
+            pickUpGun(other);
         }
     }
+    private void die()
+    {
+        _alive = false;
+        _sr.sprite = _deadSprite;
+        _deadText.text = "DEAD";
+        _rb.velocity = new Vector2(0, _rb.velocity.y);
+    }
+    private void win()
+    {
+        _won = true;
+        _winText.text = "WIN";
+    }
+    private void pickUpGun(Collider2D gun)
+    {
+        Destroy(gun.gameObject);
+    }
+
 
 }
