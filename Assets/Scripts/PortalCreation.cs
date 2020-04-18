@@ -4,34 +4,73 @@ using UnityEngine;
 
 public class PortalCreation : MonoBehaviour
 {
-    private int _lastPortalCreated;
+    public int portalCount;
+    private GameObject _nextPortalToCreate;
+    private GameObject _portal1;
+    private GameObject _portal2;
+    private Teleporter _portal;
 
     // Start is called before the first frame update
     void Start()
     {
-        _lastPortalCreated = 2;
+        _portal1 = GameObject.FindGameObjectWithTag("Portal1");
+        _portal2 = GameObject.FindGameObjectWithTag("Portal2");
+        _portal = FindObjectOfType<Teleporter>();
+        portalCount = 0;
     }
 
-    // Update is called once per frame
-    void Update()
+    void DecideNextPortal()
     {
-        
+        if (_portal.gameObject.CompareTag("Portal1") && _portal.lastCreated)
+        {
+            _nextPortalToCreate = _portal2;
+            _portal.lastCreated = false;
+        }
+        else if (_portal.gameObject.CompareTag("Portal1") && !_portal.lastCreated)
+        {
+            _nextPortalToCreate = _portal1;
+            _portal.lastCreated = true;
+        }
+        if (_portal.gameObject.CompareTag("Portal2") && _portal.lastCreated)
+        {
+            _nextPortalToCreate = _portal1;
+            _portal.lastCreated = false;
+        }
+        else if (_portal.gameObject.CompareTag("Portal2") && !_portal.lastCreated)
+        {
+            _nextPortalToCreate = _portal2;
+            _portal.lastCreated = true;
+        }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void DecideNextPortalRotation(ContactPoint2D contactPoint)
     {
-        int x = 5;//other.contacts[0].normal
+        float z = 0;
+
+        if (contactPoint.normal.x > 0)
+            z = 180;
+        else if (contactPoint.normal.x < 0)
+            z = 0;
+        else if (contactPoint.normal.y < 0)
+            z = 90;
+        else if (contactPoint.normal.y > 0)
+            z = 270;
+
+        _nextPortalToCreate.transform.rotation = Quaternion.Euler(0, 0, z);
     }
 
-    void OnCollisionEnter(Collision collisionInfo)
+    void OnCollisionEnter2D(Collision2D collisionInfo)
     {
         if (collisionInfo.gameObject.CompareTag("Ground"))
         {
-            Vector2 portalNormal = collisionInfo.GetContact(0).normal;
-            //לפתור את הבעייה שהפונקציה הזאת לא נקראת בכלל...
-            //פה צריך ליצור את הפורטל שהוא לא האחרון שנוצר בזווית שהיא משיקה לפורטל נורמל
-
-            Destroy(collisionInfo.gameObject);
+            ContactPoint2D contactPoint = collisionInfo.GetContact(0);
+            DecideNextPortal();
+            _nextPortalToCreate.transform.position = contactPoint.point;
+            DecideNextPortalRotation(contactPoint);
+            portalCount++;
+            Destroy(gameObject);
         }
     }
+
+  
 }

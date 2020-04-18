@@ -20,7 +20,6 @@ public class ShootingController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.X))
         {
             var instPortalShoot = Instantiate(portalShoot, transform.position, Quaternion.identity);
-
             var instPortalShootRb = instPortalShoot.GetComponent<Rigidbody2D>();
             instPortalShootRb.AddForce(shotDirection * shotSpeed);
         }
