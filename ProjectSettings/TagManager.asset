@@ -10,6 +10,8 @@ TagManager:
   - Portal2
   - Spike
   - EndDoor
+  - Ground
+  - portalShot
   layers:
   - Default
   - TransparentFX
@@ -55,4 +57,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 2784068039
+    locked: 0
+  - name: Spikes
+    uniqueID: 2147011839
     locked: 0

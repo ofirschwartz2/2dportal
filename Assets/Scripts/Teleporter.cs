@@ -22,11 +22,13 @@ public class Teleporter : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         string myTag = gameObject.tag;
-
+        
         if (other.gameObject.CompareTag("Caveman") && DateTime.Now - _player.PortalEnterTime > RestartTeleporterTimeSpan)
         {
             _player.PortalEnterTime = DateTime.Now;
             other.gameObject.transform.position = myTag == "Portal1" ? _portal2Pos : _portal1Pos;
         }
     }
+
+
 }
