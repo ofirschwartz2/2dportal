@@ -47,6 +47,4 @@ public class Teleporter : MonoBehaviour
 
         return ans;
     }
-
-
 }

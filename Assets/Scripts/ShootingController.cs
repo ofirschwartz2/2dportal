@@ -12,8 +12,6 @@ public class ShootingController : MonoBehaviour
     private SpriteRenderer portalgunsr;
     private Transform portalguntransform;
 
-
-    // Start is called before the first frame update
     void Start()
     {
         shotDirection = new Vector2(10, 10);
@@ -22,7 +20,6 @@ public class ShootingController : MonoBehaviour
         portalguntransform = cavemanPortalGun.GetComponent<Transform>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
@@ -46,8 +43,7 @@ public class ShootingController : MonoBehaviour
             cavemanPortalGun.SetActive(true);
             if (Input.GetKeyDown(KeyCode.X))
             {
-                var instPortalShoot = Instantiate(portalShoot, transform.position, Quaternion.identity);
-
+                var instPortalShoot = Instantiate(portalShoot, portalguntransform.position, Quaternion.identity);
                 var instPortalShootRb = instPortalShoot.GetComponent<Rigidbody2D>();
                 instPortalShootRb.AddForce(shotDirection * shotSpeed);
             }
