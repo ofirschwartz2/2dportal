@@ -50,6 +50,7 @@ public class PlayerInteractionsController : MonoBehaviour
     {
         _won = true;
         _winText.text = "WIN";
+        _rb.velocity = new Vector2(0, _rb.velocity.y);
     }
 
     private void pickUpGun(Collider2D gun)
