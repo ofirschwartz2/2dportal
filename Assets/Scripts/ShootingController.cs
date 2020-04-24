@@ -20,7 +20,14 @@ public class ShootingController : MonoBehaviour
 
     void Update()
     {
-        if(armed) cavemanPortalGun.SetActive(true);
+        if (armed)
+        {
+            cavemanPortalGun.SetActive(true);
+        }
+        else
+        {
+            cavemanPortalGun.SetActive(false);
+        }
         Shooting();
         PositioningGun();
         AimGun();
@@ -43,7 +50,7 @@ public class ShootingController : MonoBehaviour
             pos.x -= 0.18f;
             pos.y -= 0.1f;
             portalGunTransform.position = pos;
-            
+
         }
         if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
         {

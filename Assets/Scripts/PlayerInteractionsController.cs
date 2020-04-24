@@ -5,10 +5,12 @@ using UnityEngine.UI;
 
 public class PlayerInteractionsController : MonoBehaviour
 {
+    public GameObject portalGun;
+    public ShootingController shootingControllerScript;
     public Text _deadText, _winText;
     public bool _alive, _won;
     private Rigidbody2D _rb;
-    private Sprite _deadSprite;
+    private Sprite _deadSprite, _cavemanSprite;
     private SpriteRenderer _sr;
 
     void Start()
@@ -20,6 +22,7 @@ public class PlayerInteractionsController : MonoBehaviour
         _deadText.text = "";
         _winText.text = "";
         _deadSprite = Resources.Load<Sprite>("Caveman Dead");
+        _cavemanSprite = Resources.Load<Sprite>("Caveman");
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -38,14 +41,23 @@ public class PlayerInteractionsController : MonoBehaviour
         }
     }
 
+
     private void die()
     {
         _alive = false;
         _sr.sprite = _deadSprite;
+        shootingControllerScript.armed = false;
         _deadText.text = "DEAD";
+        portalGun.SetActive(true);
         _rb.velocity = new Vector2(0, _rb.velocity.y);
+        StartCoroutine(rebirth());
     }
 
+    private IEnumerator rebirth()
+    {
+        yield return new WaitForSeconds(1f);
+        _sr.sprite = _cavemanSprite;
+    }
     private void win()
     {
         _won = true;
@@ -55,6 +67,6 @@ public class PlayerInteractionsController : MonoBehaviour
 
     private void pickUpGun(Collider2D gun)
     {
-        Destroy(gun.gameObject);
+        gun.gameObject.SetActive(false);
     }
 }
