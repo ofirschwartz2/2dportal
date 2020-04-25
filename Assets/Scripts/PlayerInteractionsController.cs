@@ -55,8 +55,11 @@ public class PlayerInteractionsController : MonoBehaviour
 
     private IEnumerator rebirth()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         _sr.sprite = _cavemanSprite;
+        transform.position = new Vector3(-6.88f, -3.06f, 0f);
+        _deadText.text = "";
+        _alive = true;
     }
     private void win()
     {

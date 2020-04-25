@@ -1989,7 +1989,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cavemanPortalGun: {fileID: 1141902539}
-  aimSpeed: 45
   portalShoot: {fileID: 1651658819}
   shotSpeed: 13
   armed: 0
@@ -2005,6 +2004,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7abc48da4466ca040b7b1bdcaad4b8d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  portalGun: {fileID: 951767580}
+  shootingControllerScript: {fileID: 619300966}
   _deadText: {fileID: 1369019214}
   _winText: {fileID: 1787230874}
   _alive: 0
