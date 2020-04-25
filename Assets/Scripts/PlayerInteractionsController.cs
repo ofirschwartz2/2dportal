@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class PlayerInteractionsController : MonoBehaviour
 {
+    public GameObject _portal1;
+    public GameObject _portal2;
     public GameObject portalGun;
     public ShootingController shootingControllerScript;
     public Text _deadText, _winText;
@@ -48,6 +50,8 @@ public class PlayerInteractionsController : MonoBehaviour
         _sr.sprite = _deadSprite;
         shootingControllerScript.armed = false;
         _deadText.text = "DEAD";
+        _portal1.transform.position = new Vector3(-15, -1, 0);
+        _portal2.transform.position = new Vector3(-15, -1, 0);
         portalGun.SetActive(true);
         _rb.velocity = new Vector2(0, _rb.velocity.y);
         StartCoroutine(rebirth());
