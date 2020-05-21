@@ -2070,6 +2070,7 @@ MonoBehaviour:
   _winText: {fileID: 1787230874}
   _alive: 0
   _won: 0
+  rebirthPosition: {x: -6.88, y: -3.06, z: 0}
 --- !u!1 &633188616
 GameObject:
   m_ObjectHideFlags: 0
@@ -2210,6 +2211,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lastCreated: 0
+  bottomBorder: -4.21
+  rightBorder: 8.88
+  topBorder: 4.22
+  leftBorder: -8.1
 --- !u!70 &638450472
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -2428,6 +2433,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lastCreated: 0
+  bottomBorder: -4.21
+  rightBorder: 8.88
+  topBorder: 4.22
+  leftBorder: -8.1
 --- !u!70 &704766011
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -4403,7 +4412,7 @@ GameObject:
   - component: {fileID: 1651658822}
   m_Layer: 0
   m_Name: Portal shot
-  m_TagString: PortalGun
+  m_TagString: portalShot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4519,7 +4528,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93814645c6e7fe046a7a3e8d24a2feaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  portalCount: 0
+  PortalCount: 0
 --- !u!1 &1670512543
 GameObject:
   m_ObjectHideFlags: 0

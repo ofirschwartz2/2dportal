@@ -14,6 +14,10 @@ TagManager:
   - portalShot
   - CavemanPortalGun
   - PortalGun
+  - RedLaser
+  - HorizontalBlueLaser
+  - VerticalBlueLaser
+  - DiagonalBlueLaser
   layers:
   - Default
   - TransparentFX
@@ -24,7 +28,7 @@ TagManager:
   - 
   - 
   - climbObjects
-  - 
+  - lasers
   - 
   - 
   - 

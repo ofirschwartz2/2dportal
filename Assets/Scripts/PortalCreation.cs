@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class PortalCreation : MonoBehaviour
 {
-    public int portalCount;
+    public int PortalCount;
     private GameObject _nextPortalToCreate;
     private GameObject _portal1;
     private GameObject _portal2;
     private Teleporter _portal;
+    private Rigidbody2D _rb;
 
     // Start is called before the first frame update
     void Start()
     {
+        _rb = GetComponent<Rigidbody2D>();
         _portal1 = GameObject.FindGameObjectWithTag("Portal1");
         _portal2 = GameObject.FindGameObjectWithTag("Portal2");
         _portal = FindObjectOfType<Teleporter>();
-        portalCount = 0;
+        PortalCount = 0;
     }
 
     void DecideNextPortal()
@@ -67,10 +69,26 @@ public class PortalCreation : MonoBehaviour
             DecideNextPortal();
             _nextPortalToCreate.transform.position = contactPoint.point;
             DecideNextPortalRotation(contactPoint);
-            portalCount++;
+            PortalCount++;
             Destroy(gameObject);
         }
     }
 
-  
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("RedLaser"))
+            Destroy(gameObject);
+        else if (other.gameObject.CompareTag("HorizontalBlueLaser"))
+        {
+            _rb.velocity = new Vector2(_rb.velocity.x, _rb.velocity.y * -1);
+        }
+        else if (other.gameObject.CompareTag("VerticalBlueLaser"))
+        {
+            _rb.velocity = new Vector2(_rb.velocity.x * -1, _rb.velocity.y);
+        }
+        else if (other.gameObject.CompareTag("DiagonalBlueLaser"))
+        {
+            _rb.velocity = new Vector2(0, -3);
+        }
+    }
 }

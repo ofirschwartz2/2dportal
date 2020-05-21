@@ -8,8 +8,9 @@ public class Teleporter : MonoBehaviour
 {
     public TimeSpan RestartTeleporterTimeSpan;
     public bool lastCreated;
-    private Vector3 _portal1Pos;
-    private Vector3 _portal2Pos;
+    public double bottomBorder, rightBorder, topBorder, leftBorder;
+    private Transform _portal1Transform;
+    private Transform _portal2Transform;
     private PlayerMovementController _player;
 
     void Start()
@@ -21,29 +22,106 @@ public class Teleporter : MonoBehaviour
 
     void Update()
     {
-        _portal1Pos = GameObject.FindGameObjectWithTag("Portal1").transform.position;
-        _portal2Pos = GameObject.FindGameObjectWithTag("Portal2").transform.position;
+        _portal1Transform = GameObject.FindGameObjectWithTag("Portal1").transform;
+        _portal2Transform = GameObject.FindGameObjectWithTag("Portal2").transform;
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        string myTag = gameObject.tag;
-        
-        if (other.gameObject.CompareTag("Caveman") && PortalsInLevel() && DateTime.Now - _player.PortalEnterTime > RestartTeleporterTimeSpan)
+        if (other.gameObject.CompareTag("Caveman") && IsPortalsInLevel() && DateTime.Now - _player.PortalEnterTime > RestartTeleporterTimeSpan)
         {
             _player.PortalEnterTime = DateTime.Now;
-            other.gameObject.transform.position = myTag == "Portal1" ? _portal2Pos : _portal1Pos;
+            Transform exitPortalTransform;
+            Transform enterPortalTransform;
+            if (gameObject.tag == "Portal1")
+            {
+                enterPortalTransform = _portal1Transform;
+                exitPortalTransform = _portal2Transform;
+            }
+            else
+            {
+                enterPortalTransform = _portal2Transform;
+                exitPortalTransform = _portal1Transform;
+            }
+
+            other.gameObject.transform.position = exitPortalTransform.position;
+
+            VelocityChange(enterPortalTransform, exitPortalTransform, other.gameObject.GetComponent<Rigidbody2D>());
         }
     }
 
-    private bool PortalsInLevel()
+    private void VelocityChange(Transform enterPortalTransform, Transform exitPortalTransform, Rigidbody2D playerRb)
     {
-        bool ans = !(_portal1Pos.x < -8.1 || _portal2Pos.x < -8.1);
+        if (enterPortalTransform.eulerAngles.z == 180.0)
+        {
+            if (exitPortalTransform.eulerAngles.z == 180.0)
+            {
+                playerRb.velocity = new Vector2(playerRb.velocity.x * -1, playerRb.velocity.y);
+            }
+            else if (exitPortalTransform.eulerAngles.z == 270.0)
+            {
+                playerRb.velocity = new Vector2(playerRb.velocity.y, playerRb.velocity.x * -1);
+            }
+            else if (exitPortalTransform.eulerAngles.z == 90.0)
+            {
+                playerRb.velocity = new Vector2(playerRb.velocity.y, playerRb.velocity.x);
+            }
+        }
+        else if (enterPortalTransform.eulerAngles.z == 0.0)
+        {
+            if (exitPortalTransform.eulerAngles.z == 0.0)
+            {
+                playerRb.velocity = new Vector2(playerRb.velocity.x * -1, playerRb.velocity.y);
+            }
+            else if (exitPortalTransform.eulerAngles.z == 270.0)
+            {
+                playerRb.velocity = new Vector2(playerRb.velocity.y * -1, playerRb.velocity.x);
+            }
+            else if (exitPortalTransform.eulerAngles.z == 90.0)
+            {
+                playerRb.velocity = new Vector2(playerRb.velocity.y, playerRb.velocity.x * -1);
+            }
+        }
+        else if (enterPortalTransform.eulerAngles.z == 90.0)
+        {
+            if (exitPortalTransform.eulerAngles.z == 0.0)
+            {
+                playerRb.velocity = new Vector2(playerRb.velocity.y * -1, 0.6f);
+            }
+            else if (exitPortalTransform.eulerAngles.z == 180.0)
+            {
+                playerRb.velocity = new Vector2(playerRb.velocity.y, 0.6f);
+            }
+            else if (exitPortalTransform.eulerAngles.z == 90.0)
+            {
+                playerRb.velocity = new Vector2(playerRb.velocity.x, playerRb.velocity.y * -1);
+            }
+        }
+        else if (enterPortalTransform.eulerAngles.z == 270.0)
+        {
+            if (exitPortalTransform.eulerAngles.z == 0.0)
+            {
+                playerRb.velocity = new Vector2(playerRb.velocity.y, 0.6f);
+            }
+            else if (exitPortalTransform.eulerAngles.z == 180.0)
+            {
+                playerRb.velocity = new Vector2(playerRb.velocity.y * -1, 0.6f);
+            }
+            else if (exitPortalTransform.eulerAngles.z == 270.0)
+            {
+                playerRb.velocity = new Vector2(playerRb.velocity.x, playerRb.velocity.y * -1);
+            }
+        }
+    }
 
-        if (_portal1Pos.x < -8.1 || _portal2Pos.x < -8.1) ans = false;
-        if (_portal1Pos.x > 8.88 || _portal2Pos.x > 8.88) ans = false;
-        if (_portal1Pos.y < -4.21 || _portal2Pos.y < -4.21) ans = false;
-        if (_portal1Pos.y > 4.22 || _portal2Pos.y > 4.22) ans = false;
+    private bool IsPortalsInLevel()
+    {
+        bool ans = true;
+
+        if (_portal1Transform.position.x < leftBorder || _portal2Transform.position.x < leftBorder) ans = false;
+        if (_portal1Transform.position.x > rightBorder || _portal2Transform.position.x > rightBorder) ans = false;
+        if (_portal1Transform.position.y < bottomBorder || _portal2Transform.position.y < bottomBorder) ans = false;
+        if (_portal1Transform.position.y > topBorder || _portal2Transform.position.y > topBorder) ans = false;
 
         return ans;
     }

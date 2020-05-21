@@ -11,6 +11,7 @@ public class PlayerInteractionsController : MonoBehaviour
     public ShootingController shootingControllerScript;
     public Text _deadText, _winText;
     public bool _alive, _won;
+    public Vector3 rebirthPosition;
     private Rigidbody2D _rb;
     private Sprite _deadSprite, _cavemanSprite;
     private SpriteRenderer _sr;
@@ -29,15 +30,16 @@ public class PlayerInteractionsController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Spike") && (_rb.velocity.y < 0))
+        GameObject otherGo = other.gameObject;
+        if (otherGo.CompareTag("Spike") && (_rb.velocity.y < 0) || otherGo.CompareTag("VerticalBlueLaser") || otherGo.CompareTag("HorizontalBlueLaser") || otherGo.CompareTag("RedLaser"))
         {
             die();
         }
-        if (other.gameObject.CompareTag("EndDoor"))
+        if (otherGo.CompareTag("EndDoor"))
         {
             win();
         }
-        if (other.gameObject.CompareTag("PortalGun"))
+        if (otherGo.CompareTag("PortalGun"))
         {
             pickUpGun(other);
         }
@@ -61,7 +63,7 @@ public class PlayerInteractionsController : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         _sr.sprite = _cavemanSprite;
-        transform.position = new Vector3(-6.88f, -3.06f, 0f);
+        transform.position = rebirthPosition;
         _deadText.text = "";
         _alive = true;
     }

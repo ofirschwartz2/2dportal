@@ -10,7 +10,7 @@ public class PlayerMovementController : MonoBehaviour
     public float ClimbSpeed;
     public LayerMask ClimbObjects;
     public DateTime PortalEnterTime;
-    private float _originalGravityScale;
+    private float _originalGravityScale, _lastHorizontalY;
     private Rigidbody2D _rb;
     private SpriteRenderer _sr;
     private bool _climbing, _alive, _won;
@@ -52,12 +52,15 @@ public class PlayerMovementController : MonoBehaviour
     {
         if (_playerInteractions._alive && !_playerInteractions._won)
         {
+            
             if (!_climbing)
             {
                 float horizontalMovement = Input.GetAxis("Horizontal") * Speed;
-                _rb.velocity = new Vector2(horizontalMovement, _rb.velocity.y);
+                if (_rb.velocity.y == 0)
+                    _rb.velocity = new Vector2(horizontalMovement , _rb.velocity.y);
+                else
+                    _rb.velocity = new Vector2(horizontalMovement * 0.1f + _rb.velocity.x * 0.93f, _rb.velocity.y);
             }
-
             if (_climbing)
             {
                 float verticalMovement = Input.GetAxis("Vertical") * ClimbSpeed;
@@ -93,6 +96,13 @@ public class PlayerMovementController : MonoBehaviour
                 }
                 else
                     _rb.gravityScale = _originalGravityScale;
+            }
+            else
+            {
+                if (Input.GetKey(KeyCode.A))
+                {
+                    _rb.velocity = Vector2.zero;
+                }
             }
         }
         else
