@@ -88,7 +88,10 @@ public class PortalCreation : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("DiagonalBlueLaser"))
         {
-            _rb.velocity = new Vector2(0, -3);
+            if(_rb.velocity.y > 2)
+                _rb.velocity = new Vector2(3, 0);
+            if (_rb.velocity.x < -2)
+                _rb.velocity = new Vector2(0, -3);
         }
     }
 }

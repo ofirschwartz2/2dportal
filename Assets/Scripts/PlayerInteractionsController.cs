@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerInteractionsController : MonoBehaviour
@@ -10,7 +13,7 @@ public class PlayerInteractionsController : MonoBehaviour
     public GameObject portalGun;
     public ShootingController shootingControllerScript;
     public Text _deadText, _winText;
-    public bool _alive, _won;
+    public bool _alive, _won, _lastFrameWon;
     public Vector3 rebirthPosition;
     private Rigidbody2D _rb;
     private Sprite _deadSprite, _cavemanSprite;
@@ -22,10 +25,23 @@ public class PlayerInteractionsController : MonoBehaviour
         _sr = GetComponent<SpriteRenderer>();
         _alive = true;
         _won = false;
+        _lastFrameWon = false;
         _deadText.text = "";
         _winText.text = "";
         _deadSprite = Resources.Load<Sprite>("Caveman Dead");
         _cavemanSprite = Resources.Load<Sprite>("Caveman");
+    }
+
+    void Update()
+    {
+        if (_lastFrameWon)
+        {
+            Thread.Sleep(2000);
+            SceneManager.LoadScene("level_2");
+        }
+
+        if (_won)
+            _lastFrameWon = true;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

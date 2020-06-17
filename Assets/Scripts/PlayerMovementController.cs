@@ -10,11 +10,11 @@ public class PlayerMovementController : MonoBehaviour
     public float ClimbSpeed;
     public LayerMask ClimbObjects;
     public DateTime PortalEnterTime;
-    private float _originalGravityScale, _lastHorizontalY;
-    private Rigidbody2D _rb;
+    public bool _climbing;
+    public Rigidbody2D _rb;
+    private float _originalGravityScale;
     private SpriteRenderer _sr;
-    private bool _climbing, _alive, _won;
-    private Sprite _cavemanSprite, _climbingSprite;
+    private Sprite _cavemanSprite, _climbingSprite, _lookUpSprite, _lookDownSprite;
     private PlayerInteractionsController _playerInteractions;
 
     void Start()
@@ -24,7 +24,9 @@ public class PlayerMovementController : MonoBehaviour
         _sr = GetComponent<SpriteRenderer>();
         _climbing = false;
         _cavemanSprite = Resources.Load<Sprite>("Caveman");
-        _climbingSprite = Resources.Load<Sprite>("Caveman Climbing2");
+        _climbingSprite = Resources.Load<Sprite>("Caveman Climbing");
+        _lookUpSprite = Resources.Load<Sprite>("CavemanLookUp");
+        _lookDownSprite = Resources.Load<Sprite>("CavemanLookDown");
         PortalEnterTime = DateTime.MinValue;
         _playerInteractions = FindObjectOfType<PlayerInteractionsController>();
     }
@@ -41,10 +43,21 @@ public class PlayerMovementController : MonoBehaviour
     {
         if (_playerInteractions._alive && !_playerInteractions._won)
         {
+            //flips:
             if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
                 _sr.flipX = true;
             if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
                 _sr.flipX = false;
+            
+            //everything else:
+            if(_climbing)
+                _sr.sprite = _climbingSprite;
+            else if (_rb.velocity.y == 0 && _rb.velocity.x == 0 && !Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.DownArrow))
+                _sr.sprite = _lookUpSprite;
+            else if (_rb.velocity.y == 0 && _rb.velocity.x == 0 && !Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.DownArrow) && !Input.GetKey(KeyCode.UpArrow))
+                _sr.sprite = _lookDownSprite;
+            else
+                _sr.sprite = _cavemanSprite;
         }
     }
 
@@ -89,7 +102,6 @@ public class PlayerMovementController : MonoBehaviour
             {
                 if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow))
                 {
-                    _sr.sprite = _climbingSprite;
                     _climbing = true;
                     _rb.velocity = Vector2.zero;
                     _rb.gravityScale = 0;
