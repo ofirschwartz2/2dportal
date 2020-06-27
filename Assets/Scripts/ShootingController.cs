@@ -74,6 +74,7 @@ public class ShootingController : MonoBehaviour
     {
         if (armed && Input.GetKeyDown(KeyCode.X))
         {
+            SoundManagerScript.PlaySound("shoot");
             var instPortalShoot = Instantiate(portalShoot, portalGunTransform.position, Quaternion.identity);
             var instPortalShootRb = instPortalShoot.GetComponent<Rigidbody2D>();
             Vector2 gunDirection = DegreeToVector2(portalGunTransform.eulerAngles.z);

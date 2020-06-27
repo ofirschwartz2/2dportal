@@ -65,6 +65,7 @@ public class PortalCreation : MonoBehaviour
     {
         if (collisionInfo.gameObject.CompareTag("Ground"))
         {
+            SoundManagerScript.PlaySound("portal");
             ContactPoint2D contactPoint = collisionInfo.GetContact(0);
             DecideNextPortal();
             _nextPortalToCreate.transform.position = contactPoint.point;
@@ -76,18 +77,23 @@ public class PortalCreation : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("RedLaser"))
+        if (other.gameObject.CompareTag("RedLaser")) {
+            SoundManagerScript.PlaySound("redLazer");
             Destroy(gameObject);
+        }
         else if (other.gameObject.CompareTag("HorizontalBlueLaser"))
         {
+            SoundManagerScript.PlaySound("blueLazer");
             _rb.velocity = new Vector2(_rb.velocity.x, _rb.velocity.y * -1);
         }
         else if (other.gameObject.CompareTag("VerticalBlueLaser"))
         {
+            SoundManagerScript.PlaySound("blueLazer");
             _rb.velocity = new Vector2(_rb.velocity.x * -1, _rb.velocity.y);
         }
         else if (other.gameObject.CompareTag("DiagonalBlueLaser"))
         {
+            SoundManagerScript.PlaySound("blueLazer");
             if(_rb.velocity.y > 2)
                 _rb.velocity = new Vector2(3, 0);
             if (_rb.velocity.x < -2)

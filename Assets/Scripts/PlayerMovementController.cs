@@ -86,6 +86,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         if (_playerInteractions._alive && !_playerInteractions._won && Input.GetKeyDown(KeyCode.Z) && _rb.velocity.y == 0)
         {
+            SoundManagerScript.PlaySound("jump");
             _climbing = false;
             _sr.sprite = _cavemanSprite;
             _rb.AddForce(Vector2.up * JumpSpeed, ForceMode2D.Impulse);

@@ -64,6 +64,7 @@ public class PlayerInteractionsController : MonoBehaviour
 
     private void die()
     {
+        SoundManagerScript.PlaySound("playerDead");
         _alive = false;
         _sr.sprite = _deadSprite;
         shootingControllerScript.armed = false;
