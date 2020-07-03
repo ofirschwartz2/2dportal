@@ -13,7 +13,7 @@ public class PlayerInteractionsController : MonoBehaviour
     public GameObject portalGun;
     public ShootingController shootingControllerScript;
     public Text _deadText, _winText;
-    public bool _alive, _won, _lastFrameWon;
+    public bool _alive, _won,  _lastFrameWon;
     public Vector3 rebirthPosition;
     private Rigidbody2D _rb;
     private Sprite _deadSprite, _cavemanSprite;
@@ -37,7 +37,11 @@ public class PlayerInteractionsController : MonoBehaviour
         if (_lastFrameWon)
         {
             Thread.Sleep(2000);
-            SceneManager.LoadScene("level_2");
+            if (SceneManager.GetActiveScene().name == "level_2"){
+                SceneManager.LoadScene("Menu");
+            } else{
+                SceneManager.LoadScene("level_2");
+            }
         }
 
         if (_won)
