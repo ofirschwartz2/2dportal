@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class CameraController : MonoBehaviour {
     public GameObject player;
     private Vector3 offset, above, below;
@@ -47,6 +47,7 @@ public class CameraController : MonoBehaviour {
             transform.position = player.transform.position + offset + below;
 
         if (Input.GetKeyDown(KeyCode.Escape))
-            Application.Quit();
+            //Application.Quit();
+            SceneManager.LoadScene("Menu");
     }
 }
