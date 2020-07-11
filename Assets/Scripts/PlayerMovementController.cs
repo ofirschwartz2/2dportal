@@ -16,12 +16,12 @@ public class PlayerMovementController : MonoBehaviour
     private SpriteRenderer _sr;
     private Sprite _cavemanSprite, _climbingSprite, _lookUpSprite, _lookDownSprite, _walk1Sprite, _walk2Sprite, _walk3Sprite, _walk4Sprite, _walk5Sprite, _walk6Sprite, _walk7Sprite, _walk8Sprite;
     private PlayerInteractionsController _playerInteractions;
-    //private float pressTime;
+    private bool changedLastTime;
 
 
     void Start()
     {
-        //pressTime = Time.time;
+        changedLastTime = false;
 
         _rb = GetComponent<Rigidbody2D>();
         _originalGravityScale = _rb.gravityScale;
@@ -71,25 +71,30 @@ public class PlayerMovementController : MonoBehaviour
             else if (_rb.velocity.y == 0 && _rb.velocity.x == 0 && !Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.DownArrow) && !Input.GetKey(KeyCode.UpArrow))
                 _sr.sprite = _lookDownSprite;
             else if (_rb.velocity.y == 0 && _rb.velocity.x != 0) {
-                if (_sr.sprite == _walk1Sprite) {
-                    _sr.sprite = _walk2Sprite;
-                } else if (_sr.sprite == _walk1Sprite) {
-                    _sr.sprite = _walk2Sprite;
-                } else if (_sr.sprite == _walk2Sprite) {
-                    _sr.sprite = _walk3Sprite;
-                } else if (_sr.sprite == _walk3Sprite) {
-                    _sr.sprite = _walk4Sprite;
-                } else if (_sr.sprite == _walk4Sprite) {
-                    _sr.sprite = _walk5Sprite;
-                } else if (_sr.sprite == _walk5Sprite) {
-                    _sr.sprite = _walk6Sprite;
-                } else if (_sr.sprite == _walk6Sprite) {
-                    _sr.sprite = _walk7Sprite;
-                } else if (_sr.sprite == _walk7Sprite) {
-                    _sr.sprite = _walk8Sprite;
-                } else{
-                    _sr.sprite = _walk1Sprite;
-                } 
+                if (changedLastTime) {
+                    if (_sr.sprite == _walk1Sprite) {
+                        _sr.sprite = _walk2Sprite;
+                    } else if (_sr.sprite == _walk1Sprite) {
+                        _sr.sprite = _walk2Sprite;
+                    } else if (_sr.sprite == _walk2Sprite) {
+                        _sr.sprite = _walk3Sprite;
+                    } else if (_sr.sprite == _walk3Sprite) {
+                        _sr.sprite = _walk4Sprite;
+                    } else if (_sr.sprite == _walk4Sprite) {
+                        _sr.sprite = _walk5Sprite;
+                    } else if (_sr.sprite == _walk5Sprite) {
+                        _sr.sprite = _walk6Sprite;
+                    } else if (_sr.sprite == _walk6Sprite) {
+                        _sr.sprite = _walk7Sprite;
+                    } else if (_sr.sprite == _walk7Sprite) {
+                        _sr.sprite = _walk8Sprite;
+                    } else{
+                        _sr.sprite = _walk1Sprite;
+                    } 
+                    changedLastTime = false;
+                } else {
+                    changedLastTime = true;
+                }
             }
             else {
                 _sr.sprite = _cavemanSprite;
