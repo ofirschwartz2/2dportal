@@ -14,11 +14,15 @@ public class PlayerMovementController : MonoBehaviour
     public Rigidbody2D _rb;
     private float _originalGravityScale;
     private SpriteRenderer _sr;
-    private Sprite _cavemanSprite, _climbingSprite, _lookUpSprite, _lookDownSprite;
+    private Sprite _cavemanSprite, _climbingSprite, _lookUpSprite, _lookDownSprite, _walk1Sprite, _walk2Sprite, _walk3Sprite, _walk4Sprite, _walk5Sprite, _walk6Sprite, _walk7Sprite, _walk8Sprite;
     private PlayerInteractionsController _playerInteractions;
+    //private float pressTime;
+
 
     void Start()
     {
+        //pressTime = Time.time;
+
         _rb = GetComponent<Rigidbody2D>();
         _originalGravityScale = _rb.gravityScale;
         _sr = GetComponent<SpriteRenderer>();
@@ -27,6 +31,16 @@ public class PlayerMovementController : MonoBehaviour
         _climbingSprite = Resources.Load<Sprite>("Caveman Climbing");
         _lookUpSprite = Resources.Load<Sprite>("CavemanLookUp");
         _lookDownSprite = Resources.Load<Sprite>("CavemanLookDown");
+
+        _walk1Sprite = Resources.Load<Sprite>("Caveman-walk1");
+        _walk2Sprite = Resources.Load<Sprite>("Caveman-walk2");
+        _walk3Sprite = Resources.Load<Sprite>("Caveman-walk3");
+        _walk4Sprite = Resources.Load<Sprite>("Caveman-walk4");
+        _walk5Sprite = Resources.Load<Sprite>("Caveman-walk5");
+        _walk6Sprite = Resources.Load<Sprite>("Caveman-walk6");
+        _walk7Sprite = Resources.Load<Sprite>("Caveman-walk7");
+        _walk8Sprite = Resources.Load<Sprite>("Caveman-walk8");
+       
         PortalEnterTime = DateTime.MinValue;
         _playerInteractions = FindObjectOfType<PlayerInteractionsController>();
     }
@@ -56,8 +70,30 @@ public class PlayerMovementController : MonoBehaviour
                 _sr.sprite = _lookUpSprite;
             else if (_rb.velocity.y == 0 && _rb.velocity.x == 0 && !Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.DownArrow) && !Input.GetKey(KeyCode.UpArrow))
                 _sr.sprite = _lookDownSprite;
-            else
+            else if (_rb.velocity.y == 0 && _rb.velocity.x != 0) {
+                if (_sr.sprite == _walk1Sprite) {
+                    _sr.sprite = _walk2Sprite;
+                } else if (_sr.sprite == _walk1Sprite) {
+                    _sr.sprite = _walk2Sprite;
+                } else if (_sr.sprite == _walk2Sprite) {
+                    _sr.sprite = _walk3Sprite;
+                } else if (_sr.sprite == _walk3Sprite) {
+                    _sr.sprite = _walk4Sprite;
+                } else if (_sr.sprite == _walk4Sprite) {
+                    _sr.sprite = _walk5Sprite;
+                } else if (_sr.sprite == _walk5Sprite) {
+                    _sr.sprite = _walk6Sprite;
+                } else if (_sr.sprite == _walk6Sprite) {
+                    _sr.sprite = _walk7Sprite;
+                } else if (_sr.sprite == _walk7Sprite) {
+                    _sr.sprite = _walk8Sprite;
+                } else{
+                    _sr.sprite = _walk1Sprite;
+                } 
+            }
+            else {
                 _sr.sprite = _cavemanSprite;
+            }
         }
     }
 
